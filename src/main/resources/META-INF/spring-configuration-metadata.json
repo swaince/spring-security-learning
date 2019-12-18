@@ -1,0 +1,59 @@
+{
+  "groups": [
+    {
+      "name": "spring.cloud.security.custom",
+      "type": "com.github.swainc.properties.SecurityProperties",
+      "sourceType": "com.github.swainc.properties.SecurityProperties"
+    },
+    {
+      "name": "spring.cloud.security.custom.browser",
+      "type": "com.github.swainc.properties.BrowserProperties",
+      "sourceType": "com.github.swainc.properties.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "spring.cloud.security.custom.login-processing-url",
+      "type": "java.lang.String",
+      "sourceType": "com.github.swainc.properties.SecurityProperties",
+      "description": "登陆请求处理地址",
+      "defaultValue": "/api/login"
+    },
+    {
+      "name": "spring.cloud.security.custom.login-page-process",
+      "type": "java.lang.String",
+      "sourceType": "com.github.swainc.properties.SecurityProperties",
+      "description": "登陆页处理器，若html页面请求则跳转至登陆页，其他则返回json",
+      "defaultValue": "/login/require"
+    },
+    {
+      "name": "spring.cloud.security.custom.browser.login-page",
+      "type": "java.lang.String",
+      "sourceType": "com.github.swainc.properties.BrowserProperties",
+      "description": "web登陆页",
+      "defaultValue": "/login.html"
+    },
+    {
+      "name": "spring.cloud.security.custom.browser.login-type",
+      "type": "com.github.swainc.constant.LoginType",
+      "sourceType": "com.github.swainc.properties.BrowserProperties",
+      "description": "登陆成功后返回数据类型",
+      "defaultValue": "JSON"
+    }
+  ],
+  "hints": [
+    {
+      "name": "spring.cloud.security.custom.browser.login-type",
+      "values": [
+        {
+          "description": "返回json数据",
+          "value": "JSON"
+        },
+        {
+          "description": "重定向至请求页面",
+          "value": "REDIRECT"
+        }
+      ]
+    }
+  ]
+}
