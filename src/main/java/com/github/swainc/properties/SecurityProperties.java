@@ -21,6 +21,11 @@ public class SecurityProperties {
     private BrowserProperties browser = new BrowserProperties();
 
     /**
+     *  验证码相关配置类
+     */
+    private CodeProperties code = new CodeProperties();
+
+    /**
      * 登陆请求地址
      */
     private String loginProcessingUrl = "/api/login";
@@ -28,4 +33,6 @@ public class SecurityProperties {
      * 登陆页处理器
      */
     private String loginPageProcess = "/login/require";
+
+
 }

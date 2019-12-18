@@ -22,11 +22,12 @@
             <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
         </p>
         <p>
-            <label for="captch">验证码</label>
-            <input type="text" id="captch" name="captch"><img src="/image/code">
+            <label for="captch" class="sr-only">验证码</label>
+            <input type="text" id="captch" name="code"><img class="form-control" src="/code/image">
         </p>
         <input name="_csrf" type="hidden" value="de043ff3-fa1d-4efc-a26a-1817b649efac" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
 </div>
+<a href="/code/sms?mobile=13700000000">发送短信验证码</a>
 </body></html>

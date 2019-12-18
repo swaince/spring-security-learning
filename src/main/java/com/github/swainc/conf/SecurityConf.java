@@ -1,5 +1,6 @@
 package com.github.swainc.conf;
 
+import com.github.swainc.filter.ValidateCodeFilter;
 import com.github.swainc.properties.BrowserProperties;
 import com.github.swainc.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  *  security 配置类
@@ -28,27 +30,31 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
 
+    @Autowired
+    private BrowserProperties browserProperties;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public BrowserProperties browserProperties() {
-        return securityProperties.getBrowser();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        validateCodeFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
+        validateCodeFilter.setSecurityProperties(securityProperties);
+
         http.formLogin()
                 .loginPage(securityProperties.getLoginPageProcess())
                 .loginProcessingUrl(securityProperties.getLoginProcessingUrl())
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .and()
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers(securityProperties.getLoginPageProcess(),
-                        browserProperties().getLoginPage(), "/image/code")
+                        browserProperties.getLoginPage(), "/code/image", "/code/sms")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
